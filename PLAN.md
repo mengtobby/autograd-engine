@@ -40,8 +40,8 @@ Goal: a `Value` class whose gradients match PyTorch.
 |---|---|---|---|
 | 1 | 45 min | Derive in chat: local gradients for +, ×, **n, tanh, exp, ReLU | [x] |
 | 2 | 30 min | Dictate specs: value.md (fields), ops.md (all ops), backward.md | [x] |
-| 3 | 15 min | Trace: hand-compute every gradient for a=2, b=-3, c=10, d=a*b+c, L=d*d | [ ] |
-| 4 | 45 min | Claude generates engine.py; review, explain 2 lines | [ ] |
+| 3 | 15 min | Trace: hand-compute every gradient for a=2, b=-3, c=10, d=a*b+c, L=d*d | [x] |
+| 4 | 45 min | Claude generates engine.py; review, explain 2 lines | [x] |
 | 5 | 30 min | Choose tests: that expression, a + a, a * a, a tanh/exp chain, all vs. PyTorch; Claude writes them; I say what one test proves | [ ] |
 | 6 | 20 min | Break it (below) | [ ] |
 | 7 | 30 min | Spec from memory: Value with + and × plus backward(), no notes; literal build in drills/ must pass the Day 1 tests | [ ] |
