@@ -25,6 +25,23 @@ piece to what's there (4 + 4 = 8). Wasn't sure how add passes gradient: it
 passes it through unchanged to every input.
 One-line takeaway: `d * d` uses d twice, so d collects 4 + 4 = 8 = 2d.
 
+## 2026-11-20 — spec from memory (Day 1, Block 7)
+Read the model spec first, then recalled from an outline (easier than intended).
+Round 1 result: literal build failed 9/9. Got right: the four fields, wrap
+plain numbers, add forward + backward with +=, multiply forward, "walk the
+list in reverse".
+Missed: grad starts at 0; leaf _backward does nothing; __radd__/__rmul__;
+multiply backward (wrote `b.grad += a.grad * out.grad`, no line for a);
+how the list is built; the seed; calling _backward at each node.
+Round 2: fixed grad -> data in multiply; recalled the seed L.grad = 1 (but
+mixed it up with grad's starting value 0). Claude filled the rest; 9/9 pass.
+Surprise / what I got wrong: grad vs data in the multiply rule again, and
+"starts at 0" (every node, at creation) vs "seed = 1" (only L, when
+backward begins).
+One-line takeaway: the backward walk is: build list (parents first) ->
+seed L.grad = 1 -> reverse the list and call each _backward.
+TODO: redo this drill cold at the start of next session, before Day 2.
+
 ## 2026-11-20 — backward: break it predictions (Day 1, Block 6)
 
 **Skip the topo sort (run `_backward` in forward order instead of reversed)**

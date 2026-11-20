@@ -44,7 +44,7 @@ Goal: a `Value` class whose gradients match PyTorch.
 | 4 | 45 min | Claude generates engine.py; review, explain 2 lines | [x] |
 | 5 | 30 min | Choose tests: that expression, a + a, a * a, a tanh/exp chain, all vs. PyTorch; Claude writes them; I say what one test proves | [x] |
 | 6 | 20 min | Break it (below) | [x] |
-| 7 | 30 min | Spec from memory: Value with + and × plus backward(), no notes; literal build in drills/ must pass the Day 1 tests | [ ] |
+| 7 | 30 min | Spec from memory: Value with + and × plus backward(), no notes; literal build in drills/ must pass the Day 1 tests | [~] done with help; redo cold before Day 2 |
 
 backward.md must answer (my words):
 - Why the output's grad starts at 1.
