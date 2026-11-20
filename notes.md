@@ -18,7 +18,8 @@ One-line takeaway:
 a = 2, b = -3, c = 10; e = a*b, d = e + c, L = d*d
 Prediction: forward e = -6, d = 4, L = 16.
 Backward L.grad = 1, d.grad = 8, e.grad = 8, c.grad = 8, a.grad = -24, b.grad = 16.
-Result: (Block 5: compare with engine and PyTorch)
+Result: all correct. Engine and PyTorch both give a.grad = -24, b.grad = 16,
+c.grad = 8 (tests/test_engine.py, 24/24 passed).
 Surprise / what I got wrong: twice did `4 += 4` as 16. `+=` adds the new
 piece to what's there (4 + 4 = 8). Wasn't sure how add passes gradient: it
 passes it through unchanged to every input.
