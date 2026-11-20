@@ -3,18 +3,19 @@
 A from-scratch reverse-mode autodiff engine, built to understand backprop:
 first on scalars, then on NumPy tensors, ending with an MLP trained on MNIST.
 
-Specs are written by hand in `specs/`; code is generated from them and reviewed
-line by line. Hand-written drills live in `drills/`. See [PLAN.md](PLAN.md).
+Built AI-natively: I do the derivations, design decisions, predictions and
+review; an AI writes every file from what I specify. Specs live in `specs/`,
+recall-drill builds in `drills/`. See [PLAN.md](PLAN.md).
 
 ## Layout
 
 ```
-specs/      piece-by-piece specs (math + tests)
+specs/      piece-by-piece specs (math + tests), dictated then approved
 engine.py   scalar Value
 tensor.py   NumPy Tensor
 nn.py       Neuron, Layer, MLP
 tests/      checked against PyTorch and finite differences
-drills/     written by hand, no AI
+drills/     literal builds of from-memory specs (recall drills)
 notes.md    predictions, results, surprises
 ```
 

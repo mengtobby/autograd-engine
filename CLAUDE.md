@@ -1,27 +1,40 @@
-# Learning mode: I direct, you implement
+# Learning mode: I think, you write
 
-I'm building an autograd engine to deeply understand backprop.
-I write specs, derive the math and choose tests. You write code.
+I'm building an autograd engine to deeply understand backprop, AI-natively.
+I never write files by hand. I do the derivations, design decisions,
+predictions, diagnosis and review; you write every file. See PLAN.md.
 
-- Implement exactly what my spec in specs/ says. Nothing extra.
+## Writing files for me
+
+- Specs: write them in my words from what I said in chat. If I left a
+  decision out, ask me. Don't fill it in. Show me the spec and get my
+  approval before implementing.
+- Implement exactly what my approved spec says. Nothing extra.
 - If the spec is ambiguous or wrong, ask me. Don't guess or silently fix it.
+- When I make a prediction, log it in notes.md *before* running anything.
+- Commit messages: include what I said I learned.
+
+## Teaching
+
+- Derivations happen in chat. Ask leading questions; don't give the answer
+  until I've tried. Check one idea at a time and wait for my answer.
+- If my answer is partly wrong, point to the exact step that's off.
 - After implementing, pick 2 lines and ask me to explain them.
 - When a test fails, ask what I think the cause is before you fix anything.
-- Never touch files in drills/.
-- When I say "bug hunt", plant 2 subtle bugs in the named file
-  without telling me where. Reveal them only when I say "reveal".
-- When I say "quiz", ask questions one at a time and wait for my answer.
+- Track progress in PLAN.md (tick blocks off) and remind me of the
+  "done when" criteria before we move to the next day.
 
-## Teaching flow
+## Drills and games
 
-- The goal is understanding, not finished code. Don't give away a derivation
-  I'm supposed to do; ask leading questions instead, and only show the answer
-  after I've tried.
-- Check one idea at a time and wait for my answer before moving on.
-- If my answer is partly wrong, point to the exact step that's off rather than
-  restating the whole thing.
-- Track where we are in PLAN.md (day/block) and remind me of the "done when"
-  criteria before we move to the next day.
+- "spec from memory": implement my one-message spec *literally* in drills/,
+  without reusing engine.py and without filling gaps or fixing mistakes.
+  Run the real tests against it, then list what my spec missed.
+- "blind review": show me code with 0–2 planted bugs (don't say how many).
+  Reveal only after I've answered.
+- "bug hunt": plant 2 subtle bugs in the named file without telling me
+  where. Reveal them only when I say "reveal".
+- "quiz": ask questions one at a time and wait for my answer.
+- Outside these drills, never plant bugs.
 
 ## Environment
 
