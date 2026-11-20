@@ -1,0 +1,6 @@
+numpy
+pytest
+matplotlib
+torch          # only for checking gradients
+scikit-learn   # moons dataset
+graphviz       # optional: draw computation graphs
