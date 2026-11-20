@@ -27,18 +27,43 @@ One-line takeaway: `d * d` uses d twice, so d collects 4 + 4 = 8 = 2d.
 
 ## 2026-11-20 — backward: break it predictions (Day 1, Block 6)
 
+**Skip the topo sort (run `_backward` in forward order instead of reversed)**
+Prediction (worked through with help): a single op (`L = a * b`) is still
+right by luck, because the leaves run first but do nothing, and L runs with
+its grad already seeded. Any graph with a middle node breaks: in the Block 3
+trace, e and d run before their grads arrive and pass on 0. Only d.grad = 8
+is right; e, c, a, b all 0. Tests that should still pass: single-op ones
+(a*a, a+a, pow, relu, 2*a, leaf/seed tests).
+Result: confirmed. 10 failed, 14 passed. Block 3 trace gave d = 8 and
+e, c, a, b = 0, exactly as predicted. All single-op tests passed.
+Surprise / what I got wrong: `a - b`, `3 - a`, `a / b`, `3 / a` and
+`a + b + c` failed but `-a` passed. Derived ops look like one op, but
+`a - b = a + (b * -1)` builds two nodes, with a middle node that runs too early.
+One-line takeaway: skipping the sort only works when every input to the
+output is a leaf; one line of code can be several nodes.
+
 **Don't set the output grad to 1**
 Prediction: every gradient comes out 0. Each backward step multiplies by the
 grad of the node after it, so a 0 seed passes 0 down the whole chain.
 Weights never change, so nothing learns, and nothing crashes (silent).
-Result:
-Surprise / what I got wrong:
-One-line takeaway:
+Also: relu at -2 and at 0 (expected grad 0) will still pass by chance, since
+the broken engine gives 0 for everything. relu at 2 should catch it.
+Result: confirmed. 19 failed, 5 passed. relu at -2 and 0 passed by chance;
+relu at 2 failed. The other 3 passes never call backward().
+Surprise / what I got wrong: nothing; both predictions held.
+One-line takeaway: a test that expects 0 can't tell "correctly 0" from
+"nothing flowed", so always pair it with a nonzero case.
 
 **`=` instead of `+=`**
 Prediction: any value used more than once gets only its last use's gradient.
 `a * a` at a = 3 gives a.grad = 3 instead of 6. Tests that catch it: `a * a`,
 `a + a`. No crash, just a wrong number.
-Result:
-Surprise / what I got wrong:
-One-line takeaway:
+Result: 6 failed, 18 passed, no crash. a*a gave 3, a+a gave 1 (as predicted);
+shared node gave (3, 6) instead of (7, 14); Block 3 trace gave d.grad 4,
+a.grad -12, b.grad 8; tanh/exp chain failed (a used twice in it).
+Surprise / what I got wrong: only named the obvious tests. Reused values were
+hiding in the Block 3 trace (d*d) and the tanh/exp chain (a used twice). And
+the error didn't stay at d: everything below d halved, because each node
+multiplies from the grad above it.
+One-line takeaway: one `=` at a shared node silently corrupts every gradient
+between it and the inputs.

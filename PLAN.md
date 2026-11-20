@@ -43,7 +43,7 @@ Goal: a `Value` class whose gradients match PyTorch.
 | 3 | 15 min | Trace: hand-compute every gradient for a=2, b=-3, c=10, d=a*b+c, L=d*d | [x] |
 | 4 | 45 min | Claude generates engine.py; review, explain 2 lines | [x] |
 | 5 | 30 min | Choose tests: that expression, a + a, a * a, a tanh/exp chain, all vs. PyTorch; Claude writes them; I say what one test proves | [x] |
-| 6 | 20 min | Break it (below) | [ ] |
+| 6 | 20 min | Break it (below) | [x] |
 | 7 | 30 min | Spec from memory: Value with + and × plus backward(), no notes; literal build in drills/ must pass the Day 1 tests | [ ] |
 
 backward.md must answer (my words):
