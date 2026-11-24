@@ -114,7 +114,8 @@ Literal build (drills/day2_engine.py): 5/9 pass (Day 1 round 1: 0/9).
 Failures = the two gaps: 2 * a (no __rmul__); shared node + Block 3 (no
 visited check → node listed twice → _backward runs twice, the same bug
 I found in the bug hunt).
-Remaining cold-check items: the visited check in build, __rmul__.
+Remaining weak spots: the visited check in build, __rmul__. (Day 3 cold check
+dropped at my request; no from-memory drill on Day 3.)
 
 Bug hunt (Block 7): accepted as is (found 1 of 2 alone), no rerun.
 

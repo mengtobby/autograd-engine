@@ -75,7 +75,7 @@ Goal: prove the engine is correct in general, then train a network with it.
 | 6 | 30 min | Experiments I design: LR too high/low, no hidden layer vs. one, ReLU vs. tanh | [x] |
 | 7 | 30 min | Bug hunt in engine.py using only tests | [x] |
 | 8 | 20 min | Trace: backprop through a 2-layer MLP with real numbers, in chat | [x] |
-| 9 | 10 min | Day 1 Block 7 redo, cold: spec Value with +, *, backward() from memory; literal build must pass drill tests | [~] 5/9 after review (was 0/9); cold check at start of Day 3 |
+| 9 | 10 min | Day 1 Block 7 redo, cold: spec Value with +, *, backward() from memory; literal build must pass drill tests | [~] 5/9 after review (was 0/9); Day 3 cold check dropped |
 
 Questions to answer (Claude logs my answers in notes.md):
 - Why central differences rather than one-sided?
@@ -98,7 +98,7 @@ Goal: the same engine on NumPy arrays, the step from toy to real.
 | 4 | 60 min | Claude generates; review with focus on broadcasting code | [ ] |
 | 5 | 40 min | Choose tests: gradcheck every op, 3+ broadcasting cases, a deep graph | [ ] |
 | 6 | 20 min | Break it (below) | [ ] |
-| 7 | 20 min | Spec from memory: matmul backward with the shape argument; literal build must pass gradcheck | [ ] |
+| 7 | 20 min | Trace: matmul backward with small real matrices in chat (shapes and numbers); the engine checks me | [ ] |
 
 tensor.md must explain (my words):
 - For C = A @ B: why ∂L/∂A = ∂L/∂C @ Bᵀ and ∂L/∂B = Aᵀ @ ∂L/∂C. Check by matching shapes.
