@@ -46,6 +46,17 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-24 — training loop (Day 2, Block 3)
+Step order: forward + loss → backward → update → zero grads (C A B D).
+
+**No zero grads** (prediction)
+Prediction: grads from previous steps leak into every later step (`+=`
+keeps adding: 5 then 5 + 3 = 8 instead of 3), so updates use the wrong,
+growing gradient.
+Result:
+Surprise / what I got wrong:
+One-line takeaway:
+
 ## 2026-11-20 — spec from memory (Day 1, Block 7)
 Read the model spec first, then recalled from an outline (easier than intended).
 Round 1 result: literal build failed 9/9. Got right: the four fields, wrap
