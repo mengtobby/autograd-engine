@@ -94,6 +94,18 @@ hinge loss, drifting weights just widen the margins. Runaway, but hidden.
 One-line takeaway: a bug can improve the metrics; only a direct test
 (grads are 0 after a step) catches it. Check the mechanism, not the outcome.
 
+## 2026-11-24 — 2-layer trace (Day 2, Block 8)
+x = 2, w₁ = 0.5, b₁ = 0, h = relu(z), w₂ = −1, b₂ = 0.5, y = +1, hinge loss.
+Forward: z = 1, h = 1, s = −0.5 (wrong side), L = 1.5. (First called s 1.5;
+that was L.)
+Backward: s.grad = −1 (mine), b₂ −1, w₂ −1, h +1 (Claude did this layer),
+z 1, w₁ 2, b₁ 1 (mine). All match the engine.
+One step at lr 0.1: s → +0.15 (now correct), L → 0.85.
+Surprise / what I got wrong: h.grad = +1: the negative weight w₂ flips the
+sign for everything below it ((−1) × (−1)).
+One-line takeaway: each layer is the same two rules (multiply: other input's
+data × grad; add: pass through), and signs carry through the weights.
+
 ## 2026-11-24 — bug hunt in engine.py (Day 2, Block 7)
 Tests: 9 failed, 45 passed.
 Bug 1 (found with an explanation): tanh backward dropped `× out.grad`.
