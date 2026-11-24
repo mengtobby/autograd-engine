@@ -60,13 +60,39 @@ most training went into the hard points near the crescent tips.
 One-line takeaway: the engine trains a real network; loss falls fast, then
 the last few % take most of the steps.
 
+**Experiments** (Day 2 Block 6; baseline lr 0.1, [16, 16, 1], tanh, 99%)
+Prediction:
+- E1 lr: 0.001 learns too slowly; 1.0 learns well; 10 jumps around / blows up.
+- E2 depth: one hidden layer [16, 1] beats no hidden layer [1].
+- E3 ReLU: worse than tanh.
+Result (experiments/moons_day2.py):
+- E1: lr 0.001 → 85% (loss 0.314, too slow ✓); lr 1.0 → 100%, loss 0 (✓,
+  better than baseline); lr 10 → loss jumped to 22.9, ended 4.47, 68% ✓.
+- E2: no hidden [1] → 86%; one hidden [16, 1] → 89% ✓ (both well below
+  [16, 16, 1]'s 99% after 100 steps).
+- E3: ReLU → 99%, about the same as tanh ✗.
+Surprise / what I got wrong: ReLU wasn't worse; on a problem this small both
+can bend the boundary enough.
+One-line takeaway: lr has a sweet spot (too small crawls, too big overshoots).
+
+**Q: Why can't a network with no hidden layer separate moons?**
+A: Its score w₁x + w₂y + b = 0 is a straight line; the crescents interlock,
+so any line cuts through the tips (86% is about the best a line can do).
+The hidden layer's nonlinearity lets the boundary bend. Without tanh/ReLU,
+stacked layers are a weighted sum of weighted sums: still one straight line.
+
 **No zero grads** (prediction)
 Prediction: grads from previous steps leak into every later step (`+=`
 keeps adding: 5 then 5 + 3 = 8 instead of 3), so updates use the wrong,
 growing gradient. Training: (C) loss jumps around or blows up, accuracy poor.
-Result:
-Surprise / what I got wrong:
-One-line takeaway:
+Result: ✗ it reached 100% with loss 0. But the largest weight grew
+1.18 → 3.11 → 5.79 (steps 10/50/99) vs ~1.1 with zeroing, and a leftover
+gradient of ~0.73 kept pushing even at loss 0.
+Surprise / what I got wrong: the bug made results look better. The summed
+gradients acted like a growing lr early (lr 1.0 also did well), and with
+hinge loss, drifting weights just widen the margins. Runaway, but hidden.
+One-line takeaway: a bug can improve the metrics; only a direct test
+(grads are 0 after a step) catches it. Check the mechanism, not the outcome.
 
 ## 2026-11-20 — spec from memory (Day 1, Block 7)
 Read the model spec first, then recalled from an outline (easier than intended).
