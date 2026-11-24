@@ -94,6 +94,17 @@ hinge loss, drifting weights just widen the margins. Runaway, but hidden.
 One-line takeaway: a bug can improve the metrics; only a direct test
 (grads are 0 after a step) catches it. Check the mechanism, not the outcome.
 
+## 2026-11-24 — Day 1 drill redo, cold (Day 2, Block 9)
+Recalled: data (float), grad starts at 0, parents, op; wrap plain numbers.
+Not recalled: _backward field, __rmul__, add/multiply backward, the 3 steps
+of backward(), the 3 rules. Not built (would fail like round 1).
+Still mixing up: "starts at 0" (every node at creation) vs "seed = 1"
+(backward sets L.grad).
+Memory hooks: add copies; multiply swaps (other input's data × out.grad);
+Build, Seed, Walk back.
+TODO next session, cold, before Day 3: multiply backward, Build-Seed-Walk
+back, the three rules.
+
 ## 2026-11-24 — 2-layer trace (Day 2, Block 8)
 x = 2, w₁ = 0.5, b₁ = 0, h = relu(z), w₂ = −1, b₂ = 0.5, y = +1, hinge loss.
 Forward: z = 1, h = 1, s = −0.5 (wrong side), L = 1.5. (First called s 1.5;
