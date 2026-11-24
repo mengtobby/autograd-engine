@@ -71,7 +71,7 @@ Goal: prove the engine is correct in general, then train a network with it.
 | 2 | 30 min | Dictate nn.md: Neuron, Layer, MLP, parameters(), weight init | [x] |
 | 3 | 20 min | Dictate train_moons.md: forward, loss (hinge or MSE), zero grads, backward, SGD step | [x] |
 | 4 | 15 min | Predict: loss curve shape, accuracy, what happens without zeroing grads | [ ] |
-| 5 | 45 min | Claude generates; review, run | [ ] |
+| 5 | 45 min | Claude generates; review, run | [x] |
 | 6 | 30 min | Experiments I design: LR too high/low, no hidden layer vs. one, ReLU vs. tanh | [ ] |
 | 7 | 30 min | Bug hunt in engine.py using only tests | [ ] |
 | 8 | 20 min | Trace: backprop through a 2-layer MLP with real numbers, in chat | [ ] |

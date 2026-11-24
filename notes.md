@@ -49,10 +49,21 @@ One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 ## 2026-11-24 — training loop (Day 2, Block 3)
 Step order: forward + loss → backward → update → zero grads (C A B D).
 
+**Moons training** (prediction, Day 2 Block 4)
+Prediction: loss curve drops fast early, then flattens (B). Final accuracy
+90%+ on the 100 points.
+Result: confirmed. Loss 0.455 → 0.065, sharp drop in the first ~5 steps
+then steady flattening. Accuracy 84% → 99% (1 point on the boundary).
+Boundary plot: clean curve weaving between the crescents.
+Surprise / what I got wrong: the random untrained net already scored 84%;
+most training went into the hard points near the crescent tips.
+One-line takeaway: the engine trains a real network; loss falls fast, then
+the last few % take most of the steps.
+
 **No zero grads** (prediction)
 Prediction: grads from previous steps leak into every later step (`+=`
 keeps adding: 5 then 5 + 3 = 8 instead of 3), so updates use the wrong,
-growing gradient.
+growing gradient. Training: (C) loss jumps around or blows up, accuracy poor.
 Result:
 Surprise / what I got wrong:
 One-line takeaway:
