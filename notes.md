@@ -25,6 +25,27 @@ piece to what's there (4 + 4 = 8). Wasn't sure how add passes gradient: it
 passes it through unchanged to every input.
 One-line takeaway: `d * d` uses d twice, so d collects 4 + 4 = 8 = 2d.
 
+## 2026-11-24 — gradcheck (Day 2, Block 1)
+Estimate a gradient from forward passes only: nudge a by h, a.grad ≈ (L₁ − L₀)/h.
+Block 3 graph, h = 0.01: one-sided gives -23.91 (true -24); central gives -24.00.
+
+**Q: Why central differences rather than one-sided?**
+A: Central uses the same nudge, but with a in the middle, so the error from
+the curve's bend cancels out on both sides. (Error shrinks like h² instead of h.)
+
+**Too-small h** (L = exp(tanh(2a))·a at a = 0.7, central difference vs engine)
+Prediction: (B) error goes down at first, then back up at very small h.
+Result: confirmed. Error 8.5e-3 (h=1e-1) → 1.0e-10 at h=1e-6 (best) →
+back up to 4.3e-3 at h=1e-14.
+Surprise / what I got wrong: didn't guess where the minimum was; it's ~1e-6.
+
+**Q: Why does a too-small h make gradcheck worse?**
+A: A tiny h magnifies the rounding error of the computer. (L(a+h) and L(a−h)
+share ~14 of their 16 digits, so the difference is mostly rounding noise, and
+dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
+with h) vs rounding noise / h (grows as h shrinks).
+One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
+
 ## 2026-11-20 — spec from memory (Day 1, Block 7)
 Read the model spec first, then recalled from an outline (easier than intended).
 Round 1 result: literal build failed 9/9. Got right: the four fields, wrap
