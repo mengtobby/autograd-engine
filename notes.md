@@ -94,6 +94,20 @@ hinge loss, drifting weights just widen the margins. Runaway, but hidden.
 One-line takeaway: a bug can improve the metrics; only a direct test
 (grads are 0 after a step) catches it. Check the mechanism, not the outcome.
 
+## 2026-11-24 — bug hunt in engine.py (Day 2, Block 7)
+Tests: 9 failed, 45 passed.
+Bug 1 (found with an explanation): tanh backward dropped `× out.grad`.
+Clue: gradcheck on tanh alone passed (out.grad = seed = 1, so the missing
+multiply is invisible) but tanh inside a chain failed. Fixing it left 5.
+Bug 2 (found myself): `if node in visited: return` deleted from build().
+Clue: the reused node's own grad was right (d = 8) but the node below got
+double (e = 16 = 8 + 8): d was in the list twice, so its _backward ran twice.
+a*a still passed because a leaf's _backward does nothing, even twice.
+Surprise / what I got wrong: couldn't see what a single-op test can't catch.
+One-line takeaway: compare what passes with what fails; a single-op test
+can't catch a missing `× out.grad`, and fixing one bug at a time shows what's
+left.
+
 ## 2026-11-20 — spec from memory (Day 1, Block 7)
 Read the model spec first, then recalled from an outline (easier than intended).
 Round 1 result: literal build failed 9/9. Got right: the four fields, wrap
