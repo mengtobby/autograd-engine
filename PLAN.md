@@ -75,7 +75,7 @@ Goal: prove the engine is correct in general, then train a network with it.
 | 6 | 30 min | Experiments I design: LR too high/low, no hidden layer vs. one, ReLU vs. tanh | [x] |
 | 7 | 30 min | Bug hunt in engine.py using only tests | [x] |
 | 8 | 20 min | Trace: backprop through a 2-layer MLP with real numbers, in chat | [x] |
-| 9 | 10 min | Day 1 Block 7 redo, cold: spec Value with +, *, backward() from memory; literal build must pass drill tests | [~] partial; retry cold at start of Day 3 |
+| 9 | 10 min | Day 1 Block 7 redo, cold: spec Value with +, *, backward() from memory; literal build must pass drill tests | [~] 5/9 after review (was 0/9); cold check at start of Day 3 |
 
 Questions to answer (Claude logs my answers in notes.md):
 - Why central differences rather than one-sided?

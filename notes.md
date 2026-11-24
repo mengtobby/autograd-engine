@@ -105,6 +105,19 @@ Build, Seed, Walk back.
 TODO next session, cold, before Day 3: multiply backward, Build-Seed-Walk
 back, the three rules.
 
+Retry right after reviewing (not cold): recalled fields, wrapping, add
+backward, multiply backward with the swap (other input's .data), Build →
+Seed → Walk back, all three rules. Follow-ups: build = "visiting the
+parents" (missed: then append, and the visited check); walk back calls each
+node's _backward ✓; named _as_value instead of __rmul__.
+Literal build (drills/day2_engine.py): 5/9 pass (Day 1 round 1: 0/9).
+Failures = the two gaps: 2 * a (no __rmul__); shared node + Block 3 (no
+visited check → node listed twice → _backward runs twice, the same bug
+I found in the bug hunt).
+Remaining cold-check items: the visited check in build, __rmul__.
+
+Bug hunt (Block 7): accepted as is (found 1 of 2 alone), no rerun.
+
 ## 2026-11-24 — 2-layer trace (Day 2, Block 8)
 x = 2, w₁ = 0.5, b₁ = 0, h = relu(z), w₂ = −1, b₂ = 0.5, y = +1, hinge loss.
 Forward: z = 1, h = 1, s = −0.5 (wrong side), L = 1.5. (First called s 1.5;
