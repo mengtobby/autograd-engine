@@ -46,6 +46,21 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-25 — gradient shapes (Day 3, Block 3)
+Prediction (as given):
+- out = X (32, 10) + b (10,): "b.grad has the same shape as b ... possibly
+  (32, 10)". ✗ Mixed up b with out. b.grad is (10,) = G.sum(axis=0): the 32
+  copies get summed back into one row.
+- H = X (32, 784) @ W (784, 128): H is (32, 128) ✓; W.grad same shape as W,
+  (784, 128) ✓ (formula not given); X.grad same as X, (32, 784) ✓.
+  Follow-up: W.grad = Xᵀ @ G = (784, 32) @ (32, 128) = (784, 128) ✓. The inner
+  32 is the batch: matmul sums over the examples, like the bias does.
+Result: (Block 5, check in the engine)
+Surprise / what I got wrong: confused the broadcast input's shape with the
+output's shape.
+One-line takeaway: the gradient matches the input's own shape, never the
+broadcast output's.
+
 ## 2026-11-24 — training loop (Day 2, Block 3)
 Step order: forward + loss → backward → update → zero grads (C A B D).
 

@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 
+import numpy as np
+
 from engine import Value
+from tensor import Tensor
 
 
 def _loss_at(f: Callable[[list[Value]], Value], xs: Sequence[float]) -> float:
@@ -42,3 +45,35 @@ def gradcheck(
                 f"input {i} (x = {xs[i]}): engine grad {leaf.grad}, "
                 f"estimate {estimate}, error {error:.2e}"
             )
+
+
+def tensor_gradcheck(
+    f: Callable[[list[Tensor]], Tensor],
+    arrays: Sequence[np.ndarray],
+    h: float = 1e-6,
+    tol: float = 1e-6,
+) -> None:
+    """Tensor version (specs/tensor.md): nudge each entry of each input one at a
+    time, with the same central difference and tolerance rule as gradcheck."""
+    if not arrays:
+        raise ValueError("tensor_gradcheck needs at least one input")
+    xs = [np.array(a, dtype=np.float64) for a in arrays]
+
+    leaves = [Tensor(x) for x in xs]
+    f(leaves).backward()
+
+    for i, leaf in enumerate(leaves):
+        for idx in np.ndindex(xs[i].shape):
+            plus = [x.copy() for x in xs]
+            minus = [x.copy() for x in xs]
+            plus[i][idx] += h
+            minus[i][idx] -= h
+            l_plus = f([Tensor(x) for x in plus]).data.item()
+            l_minus = f([Tensor(x) for x in minus]).data.item()
+            estimate = (l_plus - l_minus) / (2 * h)
+            error = abs(leaf.grad[idx] - estimate)
+            if error > tol * (1 + abs(estimate)):
+                raise AssertionError(
+                    f"input {i} entry {idx}: engine grad {leaf.grad[idx]}, "
+                    f"estimate {estimate}, error {error:.2e}"
+                )
