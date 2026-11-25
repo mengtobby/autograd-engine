@@ -97,7 +97,7 @@ Goal: the same engine on NumPy arrays, the step from toy to real.
 | 3 | 15 min | Predict gradient shapes: (32,10) + (10,) bias; (32,784) @ (784,128) | [x] |
 | 4 | 60 min | Claude generates; review with focus on broadcasting code | [x] |
 | 5 | 40 min | Choose tests: gradcheck every op, 3+ broadcasting cases, a deep graph | [x] |
-| 6 | 20 min | Break it (below) | [ ] |
+| 6 | 20 min | Break it (below) | [x] |
 | 7 | 20 min | Trace: matmul backward with small real matrices in chat (shapes and numbers); the engine checks me | [ ] |
 
 tensor.md must explain (my words):

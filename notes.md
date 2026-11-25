@@ -46,6 +46,24 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-25 — tensor break it (Day 3, Block 6)
+Prediction:
+1. No un-summing in add (b (2,) + X (3, 2)): runs silently, wrong numbers.
+2. Matmul without the transpose (G @ B): crash for (2,3) @ (3,4) (shapes
+   mismatch); silently wrong for square (3,3) @ (3,3).
+3. Recursive build on a 5,000-op chain: RecursionError.
+Result:
+1. ✗ Crashed: "non-broadcastable output operand with shape (2,) doesn't
+   match the broadcast shape (3,2)" (row and column cases both).
+2. ✓ (2,3) @ (3,4) crashed on shape mismatch; square (3,3) ran with the right
+   shape but wrong numbers, and gradcheck caught it (0.41 vs 1.13).
+3. ✓ 500 ops fine; 5,000 → RecursionError.
+Surprise / what I got wrong: break 1 crashed because grads are written in
+place (`b.grad += G`), and NumPy won't fit (3, 2) into a (2,) array. With
+`b.grad = b.grad + G` it would have silently become (3, 2).
+One-line takeaway: shapes only protect you when they differ; square matrices
+let a wrong formula run, and only gradcheck catches it.
+
 ## 2026-11-25 — gradient shapes (Day 3, Block 3)
 Prediction (as given):
 - out = X (32, 10) + b (10,): "b.grad has the same shape as b ... possibly
