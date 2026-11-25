@@ -46,6 +46,15 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-25 — matmul trace (Day 3, Block 7)
+A = [[1, 2], [3, 4]], B = [[5], [6]], C = A @ B, L = C.sum().
+Forward: first wrote C = [[5, 12], [15, 24]] (multiplied the pairs but
+didn't add them). Correct: C = [[17], [39]] (2, 1), L = 56.
+Backward: G = ones (2, 1). A.grad = G @ Bᵀ = [[5, 6], [5, 6]] (2, 2) ✓.
+B.grad = Aᵀ @ G = [[4], [6]] ✓. All match the engine.
+One-line takeaway: each A entry gets the B number it was multiplied by;
+B is shared across A's rows, so it sums over them (1 + 3 = 4, 2 + 4 = 6).
+
 ## 2026-11-25 — tensor break it (Day 3, Block 6)
 Prediction:
 1. No un-summing in add (b (2,) + X (3, 2)): runs silently, wrong numbers.

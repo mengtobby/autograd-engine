@@ -98,7 +98,7 @@ Goal: the same engine on NumPy arrays, the step from toy to real.
 | 4 | 60 min | Claude generates; review with focus on broadcasting code | [x] |
 | 5 | 40 min | Choose tests: gradcheck every op, 3+ broadcasting cases, a deep graph | [x] |
 | 6 | 20 min | Break it (below) | [x] |
-| 7 | 20 min | Trace: matmul backward with small real matrices in chat (shapes and numbers); the engine checks me | [ ] |
+| 7 | 20 min | Trace: matmul backward with small real matrices in chat (shapes and numbers); the engine checks me | [x] |
 
 tensor.md must explain (my words):
 - For C = A @ B: why ∂L/∂A = ∂L/∂C @ Bᵀ and ∂L/∂B = Aᵀ @ ∂L/∂C. Check by matching shapes.
