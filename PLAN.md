@@ -92,8 +92,8 @@ Goal: the same engine on NumPy arrays, the step from toy to real.
 
 | Block | Time | Task | Done |
 |---|---|---|---|
-| 1 | 45 min | Derive in chat: matmul gradients with shapes; broadcasting gradients | [ ] |
-| 2 | 40 min | Dictate tensor.md: elementwise ops, matmul, sum/mean with axis, reshape, transpose, iterative topo sort | [ ] |
+| 1 | 45 min | Derive in chat: matmul gradients with shapes; broadcasting gradients | [x] |
+| 2 | 40 min | Dictate tensor.md: elementwise ops, matmul, sum/mean with axis, reshape, transpose, iterative topo sort | [x] |
 | 3 | 15 min | Predict gradient shapes: (32,10) + (10,) bias; (32,784) @ (784,128) | [ ] |
 | 4 | 60 min | Claude generates; review with focus on broadcasting code | [ ] |
 | 5 | 40 min | Choose tests: gradcheck every op, 3+ broadcasting cases, a deep graph | [ ] |
