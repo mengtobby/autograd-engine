@@ -46,6 +46,16 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-26 — MNIST predictions (Day 4, Block 3)
+Logged before any code was generated or run.
+Prediction:
+1. Starting loss (first batch, before any update): 2.3
+2. Test accuracy after epoch 1: 85%
+3. Test accuracy after 10 epochs: 96%
+4. Epochs to reach 97%: never
+5. Seconds per epoch: 20 s
+Result: (pending)
+
 ## 2026-11-26 — softmax / cross-entropy derivation (Day 4, Block 1)
 Softmax p_i = e^(z_i) / Σ e^(z_j): e^ makes every score positive but keeps
 the order (not like abs: −3 → 0.05, 3 → 20.1); dividing by the total makes
