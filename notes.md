@@ -46,6 +46,19 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-26 — MNIST break it (Day 4, Block 5)
+Prediction (worked through with hints):
+1. No max subtraction, logits [1000, 1001, 1002]: e^1000 = inf, total = inf,
+   inf / inf = nan, so the loss is nan. nan spreads: gradients and then every
+   weight become nan.
+2. Softmax then log, done separately, logits [1000, 200] with the second class
+   correct: separate gives inf, fused gives 800.
+3. All-zero init: h = tanh(0) = 0, logits = 0, starting loss 2.3 (looks
+   healthy!). W2.grad = hᵀ @ G = 0; h.grad = G @ W2ᵀ = 0, so W1 and b1 get 0.
+   Only b2 changes, every step, forever. Same logits for every image, so it
+   predicts the same digit every time: about 10% accuracy.
+Result: (pending)
+
 ## 2026-11-26 — MNIST predictions (Day 4, Block 3)
 Logged before any code was generated or run.
 Prediction:
