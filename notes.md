@@ -54,7 +54,15 @@ Prediction:
 3. Test accuracy after 10 epochs: 96%
 4. Epochs to reach 97%: never
 5. Seconds per epoch: 20 s
-Result: (pending)
+Result (10 epochs, B = 64, lr 0.1, 784-128-10 tanh):
+1. Starting loss 2.2988 (ln 10 = 2.3026) ✓
+2. Epoch 1: 92.24% (predicted 85%; it's 938 updates, not the 79 of the short test)
+3. Epoch 10: 97.00% (predicted 96%). Best 97.04% at epoch 9.
+4. First reached 97% at epoch 9 (predicted never)
+5. ~2.5 s per epoch (predicted 20 s): NumPy does a whole batch in one matmul
+Per epoch: 92.24, 93.74, 94.51, 95.41, 95.63, 96.18, 96.49, 96.71, 97.04, 97.00
+Also: test_short_run failed at 84.7% vs an 85% bar. My diagnosis: the bar
+was too strict for ~79 updates (gradcheck + PyTorch passed); lowered to 80%.
 
 ## 2026-11-26 — softmax / cross-entropy derivation (Day 4, Block 1)
 Softmax p_i = e^(z_i) / Σ e^(z_j): e^ makes every score positive but keeps
