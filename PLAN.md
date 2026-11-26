@@ -126,7 +126,7 @@ Goal: a real model, trained end to end on my own engine.
 | 4 | 60 min | Claude generates; review, train | [x] |
 | 5 | 30 min | Break it (below) | [x] |
 | 6 | 30 min | Experiments I design: batch size, LR, width, init scale | [x] |
-| 7 | 30 min | Spec from memory: full scalar engine in one message, 15 min, no notes; literal build must pass all Day 1 + Day 2 tests first try | [ ] |
+| 7 | 30 min | Spec from memory: full scalar engine in one message, 15 min, no notes; literal build must pass all Day 1 + Day 2 tests first try | dropped at my request |
 | 8 | 20 min | Quiz: 10 questions covering all 4 days | [ ] |
 
 Questions to answer:
@@ -139,7 +139,7 @@ Break it (predict first):
 - Compute softmax and log separately and compare with the fused version.
 - Initialize all weights to zero.
 
-**Done when:** about 97% test accuracy, starting loss ≈ 2.30, and the spec-from-memory build passes first try.
+**Done when:** about 97% test accuracy and starting loss ≈ 2.30. (Spec-from-memory criterion dropped with Block 7.)
 
 ---
 
