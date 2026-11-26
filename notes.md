@@ -53,7 +53,29 @@ Prediction:
 - lr 1.0: blows up.
 - Init without 1/√n_in (Day 2's uniform(−1, 1)): saturates.
 - B 16 / 256, lr 0.01, width 16 / 512: no prediction.
-Result: (pending)
+Result (8 runs in parallel, 1 thread each, so s/epoch is slower than the solo run):
+| run | epoch 1 | epoch 10 | best | s/epoch | start loss | loss steps 0–100 |
+|---|---|---|---|---|---|---|
+| baseline | 92.24% | 97.00% | 97.04% | 4.9 | 2.32 | 1.13 |
+| B 16 | 94.93% | **98.04%** | 98.04% | 6.4 | 2.30 | 1.17 |
+| B 256 | 89.82% | 94.50% | 94.50% | 4.9 | 2.31 | 1.13 |
+| lr 0.01 | 86.45% | 92.43% | 92.43% | 4.8 | 2.32 | 2.13 |
+| lr 1.0 | 94.08% | 95.66% | 96.61% | 4.7 | 2.32 | **10.17** |
+| width 16 | 92.00% | 94.58% | 94.86% | 2.5 | 2.28 | 1.38 |
+| width 512 | 91.29% | 96.73% | 96.73% | 13.9 | 2.29 | 1.01 |
+| init no 1/√n_in | 87.46% | 93.38% | 93.38% | 4.7 | **9.17** | 2.94 |
+- lr 1.0: partly right. No nan and no divergence, but the early loss spiked
+  (average 10.2 over the first 100 steps vs 1.1) and test accuracy zig-zagged
+  every epoch (94 → 93 → 91 → 96 → 92 → 95 …). It overshoots back and forth.
+- Unscaled init: ✓ saturates. 60% of hidden units start at |h| > 0.99, the
+  starting loss is 9.17, not 2.30 (the ln 10 check catches this one), and it
+  stays behind all run long: 93.38% vs 97.00%.
+- Batch size: B 16 gives 3,750 updates per epoch, the best result (98.04%), and
+  only ~30% slower per epoch. B 256 gives 235 updates per epoch: 94.5%.
+- lr 0.01: steady but slow, 92.43%. Width 16: 94.6%, too small. Width 512:
+  96.7% in 10 epochs (no better than 128) and ~3× slower.
+Bad init scale, first few hundred steps: the loss starts far above 2.30 and
+learning is slow because saturated units pass back ~0 gradient.
 
 ## 2026-11-26 — MNIST break it (Day 4, Block 5)
 Prediction (worked through with hints):

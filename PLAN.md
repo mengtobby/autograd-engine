@@ -125,7 +125,7 @@ Goal: a real model, trained end to end on my own engine.
 | 3 | 15 min | Predict: initial loss for 10 classes, final accuracy, epochs needed | [x] |
 | 4 | 60 min | Claude generates; review, train | [x] |
 | 5 | 30 min | Break it (below) | [x] |
-| 6 | 30 min | Experiments I design: batch size, LR, width, init scale | [ ] |
+| 6 | 30 min | Experiments I design: batch size, LR, width, init scale | [x] |
 | 7 | 30 min | Spec from memory: full scalar engine in one message, 15 min, no notes; literal build must pass all Day 1 + Day 2 tests first try | [ ] |
 | 8 | 20 min | Quiz: 10 questions covering all 4 days | [ ] |
 
