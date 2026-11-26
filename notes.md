@@ -46,6 +46,15 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-26 — MNIST experiments (Day 4, Block 6)
+Baseline: B = 64, lr 0.1, width 128, init uniform(−1, 1)/√n_in, 10 epochs → 97.00%.
+One knob changed per run.
+Prediction:
+- lr 1.0: blows up.
+- Init without 1/√n_in (Day 2's uniform(−1, 1)): saturates.
+- B 16 / 256, lr 0.01, width 16 / 512: no prediction.
+Result: (pending)
+
 ## 2026-11-26 — MNIST break it (Day 4, Block 5)
 Prediction (worked through with hints):
 1. No max subtraction, logits [1000, 1001, 1002]: e^1000 = inf, total = inf,
