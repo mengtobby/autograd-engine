@@ -120,7 +120,7 @@ Goal: a real model, trained end to end on my own engine.
 
 | Block | Time | Task | Done |
 |---|---|---|---|
-| 1 | 40 min | Derive in chat: log-softmax with max subtraction; CE gradient = softmax − one_hot | [ ] |
+| 1 | 40 min | Derive in chat: log-softmax with max subtraction; CE gradient = softmax − one_hot | [x] |
 | 2 | 30 min | Dictate loss.md (fused log-softmax + CE) and train_mnist.md (minibatches, init, SGD/momentum, eval) | [ ] |
 | 3 | 15 min | Predict: initial loss for 10 classes, final accuracy, epochs needed | [ ] |
 | 4 | 60 min | Claude generates; review, train | [ ] |

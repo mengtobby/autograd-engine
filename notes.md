@@ -46,6 +46,24 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-26 — softmax / cross-entropy derivation (Day 4, Block 1)
+Softmax p_i = e^(z_i) / Σ e^(z_j): e^ makes every score positive but keeps
+the order (not like abs: −3 → 0.05, 3 → 20.1); dividing by the total makes
+the 10 p's add to 1.
+Cross-entropy L = −log(p_y): certain and right → 0; p_y = 0.0001 → huge
+(≈ 9.2); all logits equal at the start → p_y = 0.1, L = ln(10) ≈ 2.30.
+Max subtraction: subtracting the same c from every logit multiplies top and
+bottom by e^(−c), so p doesn't change. With c = max(z) the biggest exponent
+is 0 → e^0 = 1, so nothing overflows.
+Gradient: L = −z_y + log Σ e^(z_j) (my rewrite).
+  ∂(−z_y)/∂z_k = −1 if k = y, else 0  (= −one_hot)
+  ∂log(S)/∂z_k = (1/S)·e^(z_k) = p_k   (needed the chain-rule explanation)
+  → ∂L/∂z_k = p_k − one_hot_k. Correct logit pushed up, wrong ones pushed
+  down by their probability; the gradient sums to 0.
+Check: start of training, y = 7 → −0.9 for the 7, +0.1 for the other nine ✓.
+One-line takeaway: CE gradient = softmax − one_hot; the starting loss
+ln(10) ≈ 2.30 is a free sanity check before any update.
+
 ## 2026-11-25 — matmul trace (Day 3, Block 7)
 A = [[1, 2], [3, 4]], B = [[5], [6]], C = A @ B, L = C.sum().
 Forward: first wrote C = [[5, 12], [15, 24]] (multiplied the pairs but
