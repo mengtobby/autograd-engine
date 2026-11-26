@@ -57,7 +57,19 @@ Prediction (worked through with hints):
    healthy!). W2.grad = hᵀ @ G = 0; h.grad = G @ W2ᵀ = 0, so W1 and b1 get 0.
    Only b2 changes, every step, forever. Same logits for every image, so it
    predicts the same digit every time: about 10% accuracy.
-Result: (pending)
+Result: all three confirmed.
+1. e^z = [inf, inf, inf], loss nan, grad [nan, nan, nan]. The fused version
+   gives 0.4076 on the same row.
+2. Separate: p = [1, 0] exactly (e^(−800) rounded to 0), loss inf. Fused: 800.0.
+3. Starting loss 2.3026; 11.35% on every epoch; W1, b1, W2 still exactly 0
+   after 3 epochs. It predicts "1" for every test image, and 11.35% is exactly
+   the share of 1s in the test set: b2 learned the class frequencies
+   (b2 is largest for digit 1: 0.145).
+Surprise / what I got wrong: nothing; the "about 10%" was really "the most
+common digit's share".
+One-line takeaway: zero init kills learning behind any zero weight matrix,
+not just symmetry: a gradient that flows through W gets multiplied by W.
+The starting-loss check (2.30) passes anyway, so it can't catch this.
 
 ## 2026-11-26 — MNIST predictions (Day 4, Block 3)
 Logged before any code was generated or run.

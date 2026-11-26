@@ -124,7 +124,7 @@ Goal: a real model, trained end to end on my own engine.
 | 2 | 30 min | Dictate loss.md (fused log-softmax + CE) and train_mnist.md (minibatches, init, SGD/momentum, eval) | [x] |
 | 3 | 15 min | Predict: initial loss for 10 classes, final accuracy, epochs needed | [x] |
 | 4 | 60 min | Claude generates; review, train | [x] |
-| 5 | 30 min | Break it (below) | [ ] |
+| 5 | 30 min | Break it (below) | [x] |
 | 6 | 30 min | Experiments I design: batch size, LR, width, init scale | [ ] |
 | 7 | 30 min | Spec from memory: full scalar engine in one message, 15 min, no notes; literal build must pass all Day 1 + Day 2 tests first try | [ ] |
 | 8 | 20 min | Quiz: 10 questions covering all 4 days | [ ] |
