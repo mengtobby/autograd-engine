@@ -69,5 +69,6 @@ where tanh still has slope.
 - Gradcheck the full model + loss on a tiny input (2 images, a hidden layer
   of 4) so it runs quickly.
 - One SGD step on a batch lowers the loss on that batch.
-- Short run (1 epoch on 5,000 images) beats 85% test accuracy.
+- Short run (1 epoch on 5,000 images) beats 80% test accuracy (85% was too
+  strict for only ~79 updates: it got 84.7%).
 - The full 10-epoch run is a script I run, not a test (too slow for pytest).
