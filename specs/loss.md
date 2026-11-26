@@ -22,6 +22,13 @@ backward. It is not built from exp/sum/log nodes.
    keeps the order; dividing by the total makes the 10 p's add to 1.
 3. **Cross-entropy:** L_row = −log(p_y). Certain and right gives 0. Confident
    and wrong is huge.
+   **Computed with my rewrite, not as log of p:** L_row = −z_y + log Σ_j e^(z_j)
+   (on the max-subtracted z). Example: z = [0, −800] with the second class
+   correct. Softmax first gives p_y = e^(−800) / (1 + e^(−800)), which rounds
+   to 0 (float64 can't go below about e^(−709)), and −log(0) = inf. The rewrite
+   gives 800 + log(1 + ~0) = 800, which is finite and correct. This is why
+   fused is more stable: we never take the log of a number that rounded to 0.
+   p is still computed for the backward.
 4. **Mean** over the N rows.
 
 ## Backward
