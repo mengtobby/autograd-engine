@@ -46,6 +46,23 @@ dividing by tiny h blows it up.) Two errors fight: the curve's bend (shrinks
 with h) vs rounding noise / h (grows as h shrinks).
 One-line takeaway: smaller h is not always better; ~1e-6 is the sweet spot.
 
+## 2026-11-27 — quiz, all 4 days (Day 4, Block 8)
+Score: 9/10 first try, 10/10 after one correction.
+1. c = a*b, a = 2, b = −3, c.grad = 4 → a.grad −12, b.grad 8 ✓
+2. Why += for L = d*d: ✗ first said "gradient descent accumulates across
+   steps" (backwards: we zero between steps). Corrected: d is used twice in
+   one backward pass; each use sends 3, += gives 6 = 2d, = gives 3 ✓
+3. Why not h = 1e-15: tiny h magnifies rounding error ✓
+4. Identical init: same gradient, they stay identical ✓
+5. Missing transpose: crash for (2,3)@(3,4); silent for square; gradcheck catches ✓
+6. Bias grad sums (not averages) over the batch: each copy is a separate use, += ✓
+7. p = [0.2, 0.7, 0.1], class 0 → [−0.8, 0.7, 0.1]; 0 up, 1 down hardest ✓
+8. Starting loss 9.2: weights too big, missing 1/√n_in ✓
+9. Logits ~ −1000 without max subtraction: e^z = 0, 0/0 = nan; max subtraction fixes it ✓
+10. One step: forward, loss, backward, update, zero grads so they don't carry over ✓
+One-line takeaway: += is about one node used many times in a single backward
+pass; zeroing grads is about separate training steps. Different problems.
+
 ## 2026-11-26 — MNIST experiments (Day 4, Block 6)
 Baseline: B = 64, lr 0.1, width 128, init uniform(−1, 1)/√n_in, 10 epochs → 97.00%.
 One knob changed per run.

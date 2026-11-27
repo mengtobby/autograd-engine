@@ -127,7 +127,7 @@ Goal: a real model, trained end to end on my own engine.
 | 5 | 30 min | Break it (below) | [x] |
 | 6 | 30 min | Experiments I design: batch size, LR, width, init scale | [x] |
 | 7 | 30 min | Spec from memory: full scalar engine in one message, 15 min, no notes; literal build must pass all Day 1 + Day 2 tests first try | dropped at my request |
-| 8 | 20 min | Quiz: 10 questions covering all 4 days | [ ] |
+| 8 | 20 min | Quiz: 10 questions covering all 4 days | [x] 9/10 first try |
 
 Questions to answer:
 - Why the starting loss should be about ln(10) ≈ 2.30, and what it means if it isn't.
