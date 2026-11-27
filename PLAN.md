@@ -145,9 +145,12 @@ Break it (predict first):
 
 ## Stage 1 exit check
 
-- [ ] Explain +=, reverse topological order, and the grad of 1 at the output without notes.
-- [ ] Derive matmul and broadcasting gradients with shapes.
-- [ ] Derive why the cross-entropy gradient is softmax − one_hot.
-- [ ] Find planted bugs from tests alone.
-- [ ] Spec the scalar engine from memory so a literal build passes every test first try.
-- [ ] In a blind review, catch a bug in generated code by reading before running.
+- [x] Explain +=, reverse topological order, and the grad of 1 at the output without notes. (Day 4 quiz)
+- [x] Derive matmul and broadcasting gradients with shapes. (Day 3)
+- [x] Derive why the cross-entropy gradient is softmax − one_hot. (Day 4, Block 1)
+- [ ] Find planted bugs from tests alone. (skipped at my request)
+- [ ] Spec the scalar engine from memory so a literal build passes every test first try. (dropped at my request)
+- [ ] In a blind review, catch a bug in generated code by reading before running. (skipped at my request)
+
+**Stage 1 finished 2026-11-27**, by my call. Final result: 97.00% MNIST test accuracy
+(98.04% with B = 16) on my own engine; starting loss 2.2988.
